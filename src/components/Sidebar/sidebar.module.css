@@ -1,0 +1,19 @@
+.sidebar{
+    width: 260px;
+    transition: width 0,3s;
+}
+
+.sidebar .collapsed{
+    width: 80px;
+    
+}
+
+.sidebar .navlink{
+    padding: 10px;
+    font-size: 16px;
+}
+
+.sidebar .collapse .navlink{
+    padding-left: 25px;
+    font-size: 14px;
+}

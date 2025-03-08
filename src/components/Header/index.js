@@ -6,14 +6,18 @@ export default function Header() {
     return (
         <header className={`${style.header} bg-dark`}>
             <nav>
-                <HeaderLink url="./">
+                <HeaderLink url="/">
                     Home
-                </HeaderLink>
-                <HeaderLink url="./cadastro">
-                    Cadastro
-                </HeaderLink>
-                <HeaderLink url="./login">
-                    Login
+                </HeaderLink>   
+                <div className={style.dropdown}>
+                    <HeaderLink url="/cadastro">Cadastro</HeaderLink>
+                    <div className={style.dropdownMenu}>
+                        <HeaderLink url="/cadastro/usuario">Usuário</HeaderLink>
+                        <HeaderLink url="/cadastro/evento">Evento</HeaderLink>
+                    </div>
+                </div>
+                <HeaderLink url="/login">
+                    Faça seu Checkin
                 </HeaderLink>
             </nav>
         </header>)

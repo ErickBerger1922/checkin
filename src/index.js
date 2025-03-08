@@ -6,6 +6,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min"
 import AppRoutes from './route';
 
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

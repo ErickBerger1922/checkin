@@ -12,3 +12,38 @@
     align-items: center;     /* Centraliza verticalmente os links dentro do nav */
     gap: 20px;               /* Espaço entre os links */
   } 
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Estilo do submenu - inicialmente oculto */
+.dropdownMenu {
+  display: none;
+  position: absolute;
+  top: 100%; /* Posição padrão do submenu */
+  left: 0;
+  background-color: #333;
+  min-width: 100px;
+  z-index: 1;
+  margin-top: 18px; /* Adiciona um espaço de 10px abaixo do item principal */
+}
+
+/* Exibir o submenu ao passar o mouse sobre o contêiner */
+.dropdown:hover .dropdownMenu {
+    display: block;
+}
+
+/* Estilo dos links dentro do submenu */
+.dropdownMenu a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Estilo dos links quando o mouse passar sobre eles */
+.dropdownMenu a:hover {
+    background-color: #575757;
+}
