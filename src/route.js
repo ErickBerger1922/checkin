@@ -8,6 +8,7 @@ import Sidebar from "./components/Sidebar";
 import Login from "./Pages/Login";
 import UsuarioLogadoProvider, { UsuarioContext } from "./contexts/Usuario";
 import { useContext } from "react";
+import Checkin from "./Pages/Checkin";
 
 function PrivateRoute({ children }) {
 
@@ -23,26 +24,28 @@ export default function AppRoutes() {
     
     return (
         <BrowserRouter>
-            <UsuarioLogadoProvider>
-
-                <Routes>
-                    <Route path="/login" element={<Login />} ></Route>
-                    <Route path="/cadastro" element={<Cadastro />} ></Route>
-                    <Route path="/*"
-                        element={
-                            <PrivateRoute>
-                                <ProtectedLayout>
-                                    <Routes>
-                                        <Route path="/" element={<Home />} ></Route>
-                                        <Route path="/cadastro" element={<Cadastro />} ></Route>
-                                    </Routes>
-                                </ProtectedLayout>
-                            </PrivateRoute>
-                        }
-                    />
-                </Routes>
-            </UsuarioLogadoProvider>
-        </BrowserRouter>
+        <UsuarioLogadoProvider>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/cadastro" element={<Cadastro />} />
+                <Route
+                    path="/*"
+                    element={
+                        <PrivateRoute>
+                            <ProtectedLayout>
+                                <Routes>
+                                    <Route path="/" element={<Home />} />
+                                    <Route path="/cadastroeventos" element={<Cadastro />} />
+                                    <Route path="/checkin" element={<Checkin />} />
+                                    {/* Outras rotas protegidas aqui */}
+                                </Routes>
+                            </ProtectedLayout>  
+                        </PrivateRoute>
+                    }
+                />
+            </Routes>
+        </UsuarioLogadoProvider>
+    </BrowserRouter>
     )
 
     function ProtectedLayout({ children }) {

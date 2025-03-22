@@ -1,6 +1,6 @@
 .sidebar{
-    width: 260px;
-    transition: width 0,3s;
+    width: 10px;
+    transition: width 0.3s;
 }
 
 .sidebar .collapsed{

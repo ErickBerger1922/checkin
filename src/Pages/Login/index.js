@@ -1,24 +1,32 @@
 import { useState } from "react";
+import { useUsuarioContext } from "../../contexts/Usuario"; // Correção aqui
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { useUsuarioContext } from "../../contexts/Usuario";
-import {  useNavigate } from "react-router-dom";
 
 export default function Login() {
-
   const [usuarioInformado, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
-  const {login} = useUsuarioContext(useUsuarioContext);
+  const { login } = useUsuarioContext(); // Correção aqui
   const navigate = useNavigate();
 
-  async function loginSubmit(e){
+  async function loginSubmit(e) {
     e.preventDefault();
-    debugger;
-    const responseAxios = await axios.get(`http://localhost:3001/pessoas?usuario=${usuarioInformado}&senha=${senha}`)
-    if(responseAxios.data.length > 0){
-      login({nome: usuarioInformado, usuarioInformado, logado: true,administrador:responseAxios.data[0].administrador});
-      navigate("/");
-    } else {
-      alert("Usuário invalido")
+    try {
+      const responseAxios = await axios.get(`http://localhost:3001/pessoas?usuario=${usuarioInformado}&senha=${senha}`);
+      if (responseAxios.data.length > 0) {
+        login({
+          nome: usuarioInformado,
+          usuarioInformado,
+          logado: true,
+          administrador: responseAxios.data[0].administrador,
+        });
+        navigate("/"); // Redireciona para a página inicial após o login
+      } else {
+        alert("Usuário inválido");
+      }
+    } catch (error) {
+      console.error("Erro no login", error);
+      alert("Erro ao fazer login. Tente novamente.");
     }
   }
 
@@ -26,11 +34,10 @@ export default function Login() {
     navigate("/cadastro");
   }
 
-
-  return(
+  return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">Faça seu Login para poder realizar o seu Checkin!</h2>
-      
+
       <form onSubmit={loginSubmit} className="border p-4 rounded shadow-sm">
         <div className="mb-3">
           <label htmlFor="usuario" className="form-label">
@@ -39,7 +46,7 @@ export default function Login() {
           <input
             type="text"
             value={usuarioInformado}
-            onChange={(e)=>setUsuario(e.target.value)}
+            onChange={(e) => setUsuario(e.target.value)}
             className="form-control"
             id="usuario"
             name="usuario"
@@ -52,13 +59,13 @@ export default function Login() {
             Senha
           </label>
           <input
-          value={senha}
-          onChange={(e)=>setSenha(e.target.value)}
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
             type="password"
             className="form-control"
             id="evento"
             name="evento"
-            placeholder="Digite o evento"
+            placeholder="Digite a senha"
           />
         </div>
 
@@ -73,5 +80,5 @@ export default function Login() {
         </button>
       </div>
     </div>
-  )
+  );
 }

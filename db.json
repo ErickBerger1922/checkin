@@ -1,10 +1,50 @@
 {
-    "pessoas": [
-      {
-        "id": 1,
-        "usuario": "admin",
-        "senha": "admin",
-        "administrador": true
-      }
-    ]
-  }
+  "pessoas": [
+    {
+      "id": 1,
+      "usuario": "admin",
+      "senha": "admin",
+      "administrador": true,
+      "cep": "00000-000",
+      "logradouro": "Rua Exemplo",
+      "numero": "123",
+      "complemento": "",
+      "bairro": "Bairro Exemplo",
+      "cidade": "Cidade Exemplo",
+      "estado": "EX"
+    },
+    {
+      "id": "240b",
+      "usuario": "Erick",
+      "senha": "2",
+      "cep": "88812-805",
+      "logradouro": "TADEUS FURMANSKI",
+      "numero": "350",
+      "complemento": "COR BEGE",
+      "bairro": "LINHA BATISTA",
+      "cidade": "CRICIUMA",
+      "estado": "SC"
+    },
+    {
+      "id": "9cb8",
+      "usuario": "a",
+      "senha": "1",
+      "cep": "88812-805",
+      "logradouro": "Rua Tadeus Furmanski",
+      "numero": "350",
+      "complemento": "COR BEGE",
+      "bairro": "Linha Batista",
+      "cidade": "Criciúma",
+      "estado": "SC"
+    }
+  ],
+  "checkin": [
+    {
+      "id": 1
+    },
+    {
+      "id": "f45e",
+      "evento": "aa"
+    }
+  ]
+}
