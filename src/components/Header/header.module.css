@@ -1,17 +1,17 @@
 .header {
     display: flex;
-    justify-content: center; /* Centraliza os itens horizontalmente */
-    align-items: center;     /* Centraliza os itens verticalmente */
-    padding: 1.1em 20;        /* Ajusta o padding para não aplicar muito espaço lateral */
-    text-align: center;      /* Garantir que o conteúdo do header também fique centralizado */
+    justify-content: center; 
+    align-items: center;    
+    padding: 1.1em 20;       
+    text-align: center;      
     background-color: #0c0b0b;
   }
   
   nav {
-    display: flex;           /* Habilita o flexbox */
-    justify-content: center; /* Centraliza os links dentro do nav */
-    align-items: center;     /* Centraliza verticalmente os links dentro do nav */
-    gap: 20px;               /* Espaço entre os links */
+    display: flex;           
+    justify-content: center; 
+    align-items: center;     
+    gap: 20px;               
   } 
 
   .dropdown {
@@ -19,16 +19,16 @@
     display: inline-block;
 }
 
-/* Estilo do submenu - inicialmente oculto */
+
 .dropdownMenu {
   display: none;
   position: absolute;
-  top: 100%; /* Posição padrão do submenu */
+  top: 100%; 
   left: 0;
   background-color: #0c0b0b;
   min-width: 100px;
   z-index: 1;
-  margin-top: 18px; /* Adiciona um espaço de 10px abaixo do item principal */
+  margin-top: 18px; 
 }
 
 .dropdown:hover .dropdownMenu {

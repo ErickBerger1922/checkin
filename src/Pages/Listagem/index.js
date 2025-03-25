@@ -19,11 +19,10 @@ export default function ListaCheckin() {
     carregarCheckins();
   }, []);
 
-  // Função para excluir um check-in
   const excluirCheckin = async (id) => {
     try {
       await axios.delete(`http://localhost:3001/checkin/${id}`);
-      setCheckins(checkins.filter((checkin) => checkin.id !== id)); // Remove o check-in da lista local
+      setCheckins(checkins.filter((checkin) => checkin.id !== id)); 
       alert("Check-in excluído com sucesso!");
     } catch (error) {
       console.error("Erro ao excluir check-in:", error);
@@ -33,7 +32,17 @@ export default function ListaCheckin() {
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Lista de Check-ins</h2>
+      <h2
+        className="text-center mb-4"
+        style={{
+          fontFamily: "'Poppins', sans-serif",
+          fontWeight: "600",
+          fontSize: "2rem",
+          color: "#4C4C6C"
+        }}
+      >
+        Lista de Check-ins
+      </h2>
 
       {erro && <div className="alert alert-danger">{erro}</div>}
 

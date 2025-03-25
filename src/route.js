@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useState, useContext } from "react";
+import { BrowserRouter, Link, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -7,7 +7,6 @@ import Cadastro from "./Pages/Cadastro";
 import Sidebar from "./components/Sidebar";
 import Login from "./Pages/Login";
 import UsuarioLogadoProvider, { UsuarioContext } from "./contexts/Usuario";
-import { useContext } from "react";
 import Checkin from "./Pages/Checkin";
 import CadastroEvento from "./Pages/Evento";
 import ListaCheckin from "./Pages/Listagem";
@@ -17,15 +16,34 @@ function PrivateRoute({ children, isAdminRoute }) {
     
     // Verifica se o usuário está logado
     if (!usuario.logado) {
-        return <Navigate to="/login" replace />
+        return <Navigate to="/login" replace />;
     }
 
     // Se for uma rota de admin e o usuário não for administrador, redireciona para a home
     if (isAdminRoute && !usuario.administrador) {
-        return <Navigate to="/" replace />
+        return <Navigate to="/" replace />;
     }
 
     return children;
+}
+
+function ProtectedLayout({ children }) {
+    const { usuario } = useContext(UsuarioContext);
+
+    return (
+        <>
+            <Header usuario={usuario} />
+            <div className="d-flex">
+                <Sidebar />
+                <div className="flex-grow-1 p-4">
+                    <main>
+                        {children}
+                    </main>
+                </div>
+            </div>
+            <Footer />
+        </>
+    );
 }
 
 export default function AppRoutes() {
@@ -42,7 +60,6 @@ export default function AppRoutes() {
                                 <ProtectedLayout>
                                     <Routes>
                                         <Route path="/" element={<Home />} />
-                                        {/* Acesso restrito aos administradores */}
                                         <Route path="/cadastroevento" element={
                                             <PrivateRoute isAdminRoute={true}>
                                                 <CadastroEvento />
@@ -53,7 +70,6 @@ export default function AppRoutes() {
                                                 <ListaCheckin />
                                             </PrivateRoute>
                                         } />
-                                        {/* Acesso livre para todos os usuários logados */}
                                         <Route path="/checkin" element={<Checkin />} />
                                     </Routes>
                                 </ProtectedLayout>  
@@ -63,20 +79,5 @@ export default function AppRoutes() {
                 </Routes>
             </UsuarioLogadoProvider>
         </BrowserRouter>
-    )
-}
-
-function ProtectedLayout({ children }) {
-    return (
-        <>
-            <Header />
-            <div className="d-flex">
-                <Sidebar />
-                <div className="flex-grow-1 p-4">
-                    {children}
-                </div>
-            </div>
-            <Footer />
-        </>
     );
 }

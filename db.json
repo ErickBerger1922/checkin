@@ -36,6 +36,18 @@
       "bairro": "Linha Batista",
       "cidade": "Criciúma",
       "estado": "SC"
+    },
+    {
+      "id": "7ae6",
+      "usuario": "",
+      "senha": "",
+      "cep": "",
+      "logradouro": "",
+      "numero": "",
+      "complemento": "",
+      "bairro": "",
+      "cidade": "",
+      "estado": ""
     }
   ],
   "checkin": [
@@ -67,6 +79,19 @@
       "endereco": {
         "cep": "88812-805",
         "logradouro": "Rua Tadeus Furmanski",
+        "numero": "350",
+        "complemento": "COR BEGE",
+        "bairro": "Linha Batista",
+        "cidade": "Criciúma",
+        "estado": "SC"
+      }
+    },
+    {
+      "id": "a1b3",
+      "nomeEvento": "aaa",
+      "endereco": {
+        "cep": "88812-805",
+        "logradouro": "TADEUS FURMANSKI",
         "numero": "350",
         "complemento": "COR BEGE",
         "bairro": "Linha Batista",
