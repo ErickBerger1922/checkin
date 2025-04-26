@@ -1,8 +1,11 @@
-package backend.backend2.controllers;
+package backend.backend2.presentation.controllers;
 
-import backend.backend2.models.entities.Evento;
-import backend.backend2.models.repository.EventoRepository;
+import backend.backend2.application.object.CriarEventoRequest;
+import backend.backend2.application.services.EventoService;
+import backend.backend2.domain.entities.Evento;
+import backend.backend2.domain.repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,13 +16,17 @@ public class EventoController {
     @Autowired
     private final EventoRepository repository;
 
+    @Autowired
+    private EventoService eventoService;
+
     public EventoController(EventoRepository repository) {
         this.repository = repository;
     }
 
     @PostMapping
-    public Evento criarEvento(@RequestBody Evento evento) {
-        return repository.save(evento);
+    public ResponseEntity<?> criarEvento(@RequestBody CriarEventoRequest evento) {
+        var retorno = eventoService.save(evento);
+        return ResponseEntity.ok(retorno);
     }
 
     @GetMapping

@@ -1,4 +1,4 @@
-package backend.backend2.models.entities;
+package backend.backend2.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,10 +12,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Checkin {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String usuario;
+
+    @ManyToOne
+    private Usuario usuario;
+
     private String evento;
     private LocalDateTime data;
 }

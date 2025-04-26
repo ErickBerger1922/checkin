@@ -1,12 +1,13 @@
-import { UsuarioContext, useUsuarioContext } from "../../contexts/Usuario";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/authSlice";
 
 export default function BotaoLogout() {
-    const {logout} = useUsuarioContext(UsuarioContext);
+    const dispatch = useDispatch();
     return (
         <button type="button" className="btn btn-light" 
         onClick={(e) => {
             e.preventDefault();
-            logout();
+           dispatch(logout());
         }} >
             Sair
             </button>

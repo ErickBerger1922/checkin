@@ -1,6 +1,7 @@
-package backend.backend2.models.entities;
+package backend.backend2.domain.entities;
 
 
+import backend.backend2.application.object.CriarEventoRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +16,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Evento {
 
+    public Evento (CriarEventoRequest evento){
+        this.ativo = true;
+        this.evento = evento.nomeEvento();
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

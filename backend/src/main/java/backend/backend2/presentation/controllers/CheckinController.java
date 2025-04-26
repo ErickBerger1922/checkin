@@ -1,7 +1,7 @@
-package backend.backend2.controllers;
+package backend.backend2.presentation.controllers;
 
-import backend.backend2.models.entities.Checkin;
-import backend.backend2.models.repository.CheckinRepository;
+import backend.backend2.domain.entities.Checkin;
+import backend.backend2.domain.repository.CheckinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

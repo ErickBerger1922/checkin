@@ -36,6 +36,18 @@
       "bairro": "Linha Batista",
       "cidade": "Criciúma",
       "estado": "SC"
+    },
+    {
+      "id": "7ae6",
+      "usuario": "",
+      "senha": "",
+      "cep": "",
+      "logradouro": "",
+      "numero": "",
+      "complemento": "",
+      "bairro": "",
+      "cidade": "",
+      "estado": ""
     }
   ],
   "checkin": [
@@ -43,8 +55,49 @@
       "id": 1
     },
     {
-      "id": "f45e",
-      "evento": "aa"
+      "id": "c0dd",
+      "usuario": "admin",
+      "evento": "casa",
+      "data": "2025-03-23T22:59:26.238Z"
+    }
+  ],
+  "eventos": [
+    {
+      "id": 1,
+      "evento": "home",
+      "cep": "00000-000",
+      "logradouro": "Rua Exemplo",
+      "numero": "123",
+      "complemento": "",
+      "bairro": "Bairro Exemplo",
+      "cidade": "Cidade Exemplo",
+      "estado": "EX"
+    },
+    {
+      "id": "dde4",
+      "nomeEvento": "casa1",
+      "endereco": {
+        "cep": "88812-805",
+        "logradouro": "Rua Tadeus Furmanski",
+        "numero": "350",
+        "complemento": "COR BEGE",
+        "bairro": "Linha Batista",
+        "cidade": "Criciúma",
+        "estado": "SC"
+      }
+    },
+    {
+      "id": "a1b3",
+      "nomeEvento": "aaa",
+      "endereco": {
+        "cep": "88812-805",
+        "logradouro": "TADEUS FURMANSKI",
+        "numero": "350",
+        "complemento": "COR BEGE",
+        "bairro": "Linha Batista",
+        "cidade": "Criciúma",
+        "estado": "SC"
+      }
     }
   ]
 }
