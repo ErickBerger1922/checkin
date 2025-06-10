@@ -1,7 +1,7 @@
 package backend.backend2.infrastructure.security;
 
-import backend.backend2.infrastructure.entities.Usuario;
-import backend.backend2.infrastructure.repositories.UsuarioRepository;
+import backend.backend2.infrastructure.entity.UsuarioJpa;
+import backend.backend2.infrastructure.repository.UsuarioRepositoryJpa;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,9 +12,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     // Repositório para acessar dados de usuário no banco de dados
 
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioRepositoryJpa usuarioRepository;
 
-    public UserDetailsServiceImpl(UsuarioRepository usuarioRepository) {
+    public UserDetailsServiceImpl(UsuarioRepositoryJpa usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // Busca o usuário no banco de dados pelo e-mail
-        Usuario usuario = usuarioRepository.findByEmail(email)
+        UsuarioJpa usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + email));
 
         // Cria e retorna um objeto UserDetails com base no usuário encontrado

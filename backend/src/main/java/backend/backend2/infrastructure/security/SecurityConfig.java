@@ -48,11 +48,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/usuario/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/usuario/endereco/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
                         .requestMatchers("/usuario/**").authenticated()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
