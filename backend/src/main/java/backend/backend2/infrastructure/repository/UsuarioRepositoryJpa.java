@@ -38,6 +38,7 @@ public class UsuarioRepositoryJpa implements UsuarioRepository {
     }
 
     @Override
+    @Transactional
     public Optional<Usuario> buscaPorEmail(String email) {
         try {
             UsuarioJpa usuarioJpa = (UsuarioJpa) em.createNativeQuery(

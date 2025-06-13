@@ -2,30 +2,30 @@ package backend.backend2.application.service;
 
 import backend.backend2.application.converters.EventoConverter;
 import backend.backend2.application.dto.EventoDto;
+import backend.backend2.application.dto.UsuarioCheckinDto;
 import backend.backend2.application.exception.RecursoNaoEncontradoException;
 import backend.backend2.domain.exception.ConflitoException;
 import backend.backend2.domain.model.evento.Evento;
+import backend.backend2.domain.model.shared.enums.TipoUsuario;
 import backend.backend2.domain.model.usuario.Usuario;
 import backend.backend2.domain.repository.EventoRepository;
-import backend.backend2.domain.repository.UsuarioRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventoService {
 
     private final EventoRepository eventoRepository;
-    private final UsuarioRepository usuarioRepository;
     private final EventoConverter eventoConverter;
     private final UsuarioService usuarioService;
 
-    public EventoService(EventoRepository eventoRepository, UsuarioRepository usuarioRepository, EventoConverter eventoConverter, UsuarioService usuarioService) {
+    public EventoService(EventoRepository eventoRepository, EventoConverter eventoConverter, UsuarioService usuarioService) {
         this.eventoRepository = eventoRepository;
-        this.usuarioRepository = usuarioRepository;
         this.eventoConverter = eventoConverter;
         this.usuarioService = usuarioService;
     }
@@ -39,6 +39,27 @@ public class EventoService {
     @Transactional(readOnly = true)
     public List<EventoDto> listaEventos() {
         return eventoRepository.listarTodos().stream().map(eventoConverter::dominioParaDto).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventoDto> listaEventosConformeEmpresa(Long empresaId) {
+        Usuario usuario = usuarioService.buscarPorId(empresaId);
+        List<EventoDto> eventos = new ArrayList<>();
+        if(usuario.getTipoUsuario() == TipoUsuario.EMPRESA){
+            eventos = eventoRepository.listaEventosConformeEmpresa(empresaId).stream().map(eventoConverter::dominioParaDto).toList();
+        }
+        return eventos;
+    }
+
+    @Transactional(readOnly = true)
+    public List<UsuarioCheckinDto> buscarUsuariosComCheckinNoEvento(Long eventoId) {
+        List<Usuario> usuarios = eventoRepository.buscarUsuariosComCheckinNoEvento(eventoId);
+        return usuarios.stream().map(usuario -> new UsuarioCheckinDto(
+                                                                usuario.getId(),
+                                                                usuario.getNome(),
+                                                                usuario.getEmail().getEndereco()))
+                                                                .collect(Collectors.toList()
+                                                            );
     }
 
     @Transactional
@@ -61,8 +82,7 @@ public class EventoService {
     }
 
     @Transactional
-    public void vinculaUsuarioAoEvento(Evento evento, Usuario usuario){
-        evento.adicionarUsuario(usuario);
-        eventoRepository.salvar(evento);
+    public void vinculaUsuarioAoEvento(Long eventoId, Long usuarioId){
+        eventoRepository.adicionarUsuarioNoEvento(eventoId, usuarioId);
     }
 }

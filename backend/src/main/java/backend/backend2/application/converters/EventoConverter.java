@@ -21,7 +21,7 @@ public class EventoConverter {
 
     public Evento dtoParaDominio(EventoDto dto, Usuario usuario){
         return new Evento(
-                null,
+                dto.getId(),
                 dto.getNome(),
                 dto.getLocalizacao(),
                 dto.getDataInicioEvento(),
@@ -58,6 +58,7 @@ public class EventoConverter {
     public EventoDto dominioParaDto(Evento evento){
         EventoDto dto = new EventoDto();
 
+        dto.setId(evento.getId());
         dto.setNome(evento.getNome());
         dto.setLocalizacao(evento.getLocalizacao());
         dto.setDataInicioEvento(evento.getDataInicioEvento());

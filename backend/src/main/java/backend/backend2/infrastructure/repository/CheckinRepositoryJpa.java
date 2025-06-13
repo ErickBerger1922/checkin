@@ -4,6 +4,8 @@ import backend.backend2.application.converters.CheckinConverter;
 import backend.backend2.application.converters.EventoConverter;
 import backend.backend2.application.converters.UsuarioConverter;
 import backend.backend2.domain.model.checkin.Checkin;
+import backend.backend2.domain.model.evento.Evento;
+import backend.backend2.domain.model.usuario.Usuario;
 import backend.backend2.domain.repository.CheckinRepository;
 import backend.backend2.infrastructure.entity.CheckinJpa;
 import backend.backend2.infrastructure.entity.EventoJpa;

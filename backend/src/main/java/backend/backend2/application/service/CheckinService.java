@@ -40,24 +40,17 @@ public class CheckinService {
 
     @Transactional
     public CheckinDto salvaCheckin(CheckinDto dto){
-        Usuario usuario = usuarioService.buscarPorId(dto.getUsuarioId());
         Evento evento = eventoService.buscarPorId(dto.getEventoId());
+        Usuario usuario = usuarioService.usuarioAutenticado();
+
+        eventoService.vinculaUsuarioAoEvento(evento.getId(), usuario.getId());
+
         Checkin checkin = checkinConverter.dtoParaDominio(dto, usuario, evento);
 
         checkinRepository.salvar(checkin);
-        eventoService.vinculaUsuarioAoEvento(evento, usuario);
 
         return checkinConverter.dominioParaDto(checkin);
     }
-
-    /*@Transactional
-    public List<CheckinDto> buscarCheckinsPorEvento(Long eventoId) {
-        List<Checkin> checkins = checkinRepository.buscarCheckinsPorEvento(eventoId);
-        return checkins.stream()
-                .map(CheckinDto::)
-                .collect(Collectors.toList());
-    }*/
-
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void deletaCheckin(Long id){

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class EventoDto {
 
+    private Long id;
     private String nome;
     private String localizacao;
     private LocalDateTime dataInicioEvento;
@@ -14,12 +15,21 @@ public class EventoDto {
     public EventoDto() {
     }
 
-    public EventoDto(String nome, String localizacao, LocalDateTime dataInicioEvento, LocalDateTime dataFimEvento, boolean ativo) {
+    public EventoDto(Long id, String nome, String localizacao, LocalDateTime dataInicioEvento, LocalDateTime dataFimEvento, boolean ativo) {
+        this.id = id;
         this.nome = nome;
         this.localizacao = localizacao;
         this.dataInicioEvento = dataInicioEvento;
         this.dataFimEvento = dataFimEvento;
         this.ativo = ativo;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {

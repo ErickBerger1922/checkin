@@ -1,5 +1,6 @@
 package backend.backend2.application.dto;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class CheckinListagemDto {

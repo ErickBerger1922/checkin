@@ -55,7 +55,6 @@ public class CheckinConverter {
 
         dto.setId(checkin.getId());
         dto.setDataHora(checkin.getDataHora());
-        dto.setUsuarioId(checkin.getUsuario().getId());
         dto.setEventoId(checkin.getEvento().getId());
 
         return dto;

@@ -3,6 +3,7 @@ package backend.backend2.domain.model.checkin;
 import backend.backend2.domain.model.evento.Evento;
 import backend.backend2.domain.model.usuario.Usuario;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class Checkin {

@@ -6,16 +6,14 @@ public class CheckinDto {
 
     private Long id;
     private LocalDateTime dataHora;
-    private Long usuarioId;
     private Long eventoId;
 
     public CheckinDto() {
     }
 
-    public CheckinDto(Long id, LocalDateTime dataHora, Long usuarioId, Long eventoId) {
+    public CheckinDto(Long id, LocalDateTime dataHora, Long eventoId) {
         this.id = id;
         this.dataHora = dataHora;
-        this.usuarioId = usuarioId;
         this.eventoId = eventoId;
     }
 
@@ -33,14 +31,6 @@ public class CheckinDto {
 
     public void setDataHora(LocalDateTime dataHora) {
         this.dataHora = dataHora;
-    }
-
-    public Long getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
     }
 
     public Long getEventoId() {

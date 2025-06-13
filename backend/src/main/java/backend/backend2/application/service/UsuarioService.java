@@ -82,7 +82,7 @@ public class UsuarioService {
         return usuarioLogado;
     }
 
-    protected Usuario usuarioAutenticado(){
+    public Usuario usuarioAutenticado(){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();

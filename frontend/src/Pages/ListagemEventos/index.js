@@ -90,33 +90,20 @@ export default function ListaEventos() {
                 ) : (
                     eventos.map((evento) => (
                         <div
-                            key={evento.id}
-                            className="card"
-                            style={{ width: "380px", boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
-                        >
-                            <div className="card-body">
-                                <h5 className="card-title mb-3">{evento.nome}</h5>
-                                <p className="card-text mb-1">
-                                    <strong>Localização:</strong> {evento.localizacao}
-                                </p>
-                                <p className="card-text mb-1">
-                                    <strong>Data Início:</strong>{" "}
-                                    {new Date(evento.dataInicioEvento).toLocaleDateString()}
-                                </p>
-                                <p className="card-text mb-1">
-                                    <strong>Data Fim:</strong>{" "}
-                                    {new Date(evento.dataFimEvento).toLocaleDateString()}
-                                </p>
-                                <p className="card-text mb-1">
-                                    <strong>Ativo:</strong> {evento.ativo ? "Sim" : "Não"}
-                                </p>
-                                <p className="card-text mb-3">
-                                    <strong>Empresa Responsável:</strong>{" "}
-                                    {evento.empresaResponsavel?.nome ?? "N/A"}
-                                </p>
+							key={evento.id}
+							className="card d-flex flex-column"
+							style={{ width: "380px", boxShadow: "0 4px 8px rgba(0,0,0,0.1)", minHeight: "100%" }}
+						>
+							<div className="card-body d-flex flex-column">
+								<h5 className="card-title mb-3">{evento.nome}</h5>
+								<p className="card-text mb-1"><strong>Localização:</strong> {evento.localizacao}</p>
+								<p className="card-text mb-1"><strong>Data Início:</strong> {new Date(evento.dataInicioEvento).toLocaleDateString()}</p>
+								<p className="card-text mb-1"><strong>Data Fim:</strong> {new Date(evento.dataFimEvento).toLocaleDateString()}</p>
+								<p className="card-text mb-1"><strong>Ativo:</strong> {evento.ativo ? "Sim" : "Não"}</p>
+								<p className="card-text mb-3"><strong>Empresa Responsável:</strong> {evento.empresaResponsavel?.nome ?? "N/A"}</p>
 
-                                {podeExcluir(evento) && (
-									<div className="d-flex justify-content-center mt-3">
+								{podeExcluir(evento) && (
+									<div className="d-flex justify-content-center mt-auto pt-3">
 										<button
 											className="btn btn-danger px-4 py-2"
 											style={{ fontSize: "1rem", fontWeight: "500", borderRadius: "6px" }}
@@ -126,8 +113,9 @@ export default function ListaEventos() {
 										</button>
 									</div>
 								)}
-                            </div>
-                        </div>
+							</div>
+						</div>
+
                     ))
                 )}
             </div>
