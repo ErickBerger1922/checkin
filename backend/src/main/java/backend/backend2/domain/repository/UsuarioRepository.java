@@ -7,7 +7,11 @@ import java.util.Optional;
 
 public interface UsuarioRepository{
 
-    Optional<UsuarioJpa> findByEmail(String email);
+    Optional<Usuario> buscarPorId(Long id);
+
+    Optional<Usuario> buscaPorEmail(String email);
 
     boolean existePorEmail(String email);
+
+    Usuario salvar(Usuario usuario);
 }

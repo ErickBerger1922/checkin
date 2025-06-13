@@ -1,6 +1,6 @@
 package backend.backend2.application.service;
 
-import backend.backend2.application.exception.ResourceNotFoundException;
+import backend.backend2.application.exception.RecursoNaoEncontradoException;
 import backend.backend2.domain.model.funcao.Funcao;
 import backend.backend2.infrastructure.repository.FuncaoRepositoryJpa;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class FuncaoService {
 
     public Set<Funcao> buscaPorNomes(Set<String> funcoes){
         return funcoes.stream().map(funcao -> funcaoRepository.buscarPorFuncao(funcao)
-                .orElseThrow(() -> new ResourceNotFoundException("Função não foi encontrada "+ funcao)))
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Função não foi encontrada "+ funcao)))
                 .collect(Collectors.toSet());
     }
 }

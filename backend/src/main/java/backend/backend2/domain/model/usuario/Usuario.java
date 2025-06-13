@@ -1,11 +1,12 @@
 package backend.backend2.domain.model.usuario;
 
+import backend.backend2.domain.exception.DadosInconsistentesException;
 import backend.backend2.domain.model.evento.Evento;
 import backend.backend2.domain.model.funcao.Funcao;
 import backend.backend2.domain.model.shared.enums.TipoUsuario;
-import backend.backend2.domain.model.vo.Cpf;
-import backend.backend2.domain.model.vo.Email;
-import backend.backend2.domain.model.vo.Endereco;
+import backend.backend2.domain.model.valueobjects.Cpf;
+import backend.backend2.domain.model.valueobjects.Email;
+import backend.backend2.domain.model.valueobjects.Endereco;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -30,6 +31,12 @@ public class Usuario {
     private Set<Funcao> funcoes = new HashSet<>();
 
     public Usuario(Long id, Email email, String senha, String nome, Cpf cpf, Endereco endereco, String razaoSocial, String cnpj, String codigoAtivacao, TipoUsuario tipoUsuario) {
+        if(tipoUsuario == TipoUsuario.PESSOA_FISICA && cpf == null){
+            throw new DadosInconsistentesException("Pessoa física deve ter CPF");
+        }
+        if (tipoUsuario == TipoUsuario.EMPRESA && cnpj == null) {
+            throw new DadosInconsistentesException("Empresa deve ter CNPJ");
+        }
         this.id = id;
         this.email = email;
         this.senha = senha;

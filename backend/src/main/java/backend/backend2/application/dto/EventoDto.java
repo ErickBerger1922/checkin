@@ -4,27 +4,22 @@ import java.time.LocalDateTime;
 
 public class EventoDto {
 
-    private Long id;
     private String nome;
     private String localizacao;
     private LocalDateTime dataInicioEvento;
     private LocalDateTime dataFimEvento;
     private boolean ativo;
+    private EmpresaResponsavelDto empresaResponsavel;
 
     public EventoDto() {
     }
 
-    public EventoDto(Long id, String nome, String localizacao, LocalDateTime dataInicioEvento, LocalDateTime dataFimEvento, boolean ativo) {
-        this.id = id;
+    public EventoDto(String nome, String localizacao, LocalDateTime dataInicioEvento, LocalDateTime dataFimEvento, boolean ativo) {
         this.nome = nome;
         this.localizacao = localizacao;
         this.dataInicioEvento = dataInicioEvento;
         this.dataFimEvento = dataFimEvento;
         this.ativo = ativo;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getNome() {
@@ -65,5 +60,13 @@ public class EventoDto {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public EmpresaResponsavelDto getEmpresaResponsavel() {
+        return empresaResponsavel;
+    }
+
+    public void setEmpresaResponsavel(EmpresaResponsavelDto empresaResponsavel) {
+        this.empresaResponsavel = empresaResponsavel;
     }
 }

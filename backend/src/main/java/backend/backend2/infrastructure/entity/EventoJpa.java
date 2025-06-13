@@ -19,6 +19,10 @@ public class EventoJpa {
     private LocalDateTime dataFimEvento;
     private boolean ativo;
 
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
+    private UsuarioJpa empresaResponsavel;
+
     @ManyToMany
     @JoinTable(name = "tb_evento_usuario",
             joinColumns = @JoinColumn(name = "evento_id"),
@@ -29,6 +33,16 @@ public class EventoJpa {
     private Set<CheckinJpa> checkins = new HashSet<>();
 
     public EventoJpa() {
+    }
+
+    public EventoJpa(Long id, String nome, String localizacao, LocalDateTime dataInicioEvento, LocalDateTime dataFimEvento, boolean ativo, UsuarioJpa empresaResponsavel) {
+        this.id = id;
+        this.nome = nome;
+        this.localizacao = localizacao;
+        this.dataInicioEvento = dataInicioEvento;
+        this.dataFimEvento = dataFimEvento;
+        this.ativo = ativo;
+        this.empresaResponsavel = empresaResponsavel;
     }
 
     public Long getId() {
@@ -77,6 +91,14 @@ public class EventoJpa {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public UsuarioJpa getEmpresaResponsavel() {
+        return empresaResponsavel;
+    }
+
+    public void setEmpresaResponsavel(UsuarioJpa empresaResponsavel) {
+        this.empresaResponsavel = empresaResponsavel;
     }
 
     public Set<UsuarioJpa> getUsuarios() {

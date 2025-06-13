@@ -1,20 +1,32 @@
 package backend.backend2.application.converters;
 
+import backend.backend2.application.dto.EmpresaResponsavelDto;
 import backend.backend2.application.dto.EventoDto;
 import backend.backend2.domain.model.evento.Evento;
+import backend.backend2.domain.model.usuario.Usuario;
 import backend.backend2.infrastructure.entity.EventoJpa;
+import backend.backend2.infrastructure.entity.UsuarioJpa;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 @Component
 public class EventoConverter {
 
-    public Evento dtoParaDominio(EventoDto dto){
+    private final UsuarioConverter usuarioConverter;
+
+    public EventoConverter(UsuarioConverter usuarioConverter) {
+        this.usuarioConverter = usuarioConverter;
+    }
+
+    public Evento dtoParaDominio(EventoDto dto, Usuario usuario){
         return new Evento(
-            dto.getId(),
-            dto.getNome(),
-            dto.getLocalizacao(),
-            dto.getDataInicioEvento(),
-            dto.getDataFimEvento()
+                null,
+                dto.getNome(),
+                dto.getLocalizacao(),
+                dto.getDataInicioEvento(),
+                dto.getDataFimEvento(),
+                usuario
         );
     }
 
@@ -27,6 +39,7 @@ public class EventoConverter {
         eventoJpa.setDataInicioEvento(evento.getDataInicioEvento());
         eventoJpa.setDataFimEvento(evento.getDataFimEvento());
         eventoJpa.setAtivo(evento.isAtivo());
+        eventoJpa.setEmpresaResponsavel(usuarioConverter.dominioParaJpa(evento.getEmpresaResponsavel()));
 
         return eventoJpa;
     }
@@ -37,7 +50,8 @@ public class EventoConverter {
                 eventoJpa.getNome(),
                 eventoJpa.getLocalizacao(),
                 eventoJpa.getDataInicioEvento(),
-                eventoJpa.getDataFimEvento()
+                eventoJpa.getDataFimEvento(),
+                usuarioConverter.jpaParaDominio(eventoJpa.getEmpresaResponsavel())
         );
     }
 
@@ -49,6 +63,10 @@ public class EventoConverter {
         dto.setDataInicioEvento(evento.getDataInicioEvento());
         dto.setDataFimEvento(evento.getDataFimEvento());
         dto.setAtivo(evento.isAtivo());
+        dto.setEmpresaResponsavel(new EmpresaResponsavelDto(
+                evento.getEmpresaResponsavel().getId(),
+                evento.getEmpresaResponsavel().getNome()
+        ));
 
         return dto;
     }

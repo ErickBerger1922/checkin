@@ -1,9 +1,12 @@
 package backend.backend2.domain.model.evento;
 
+import backend.backend2.domain.model.checkin.Checkin;
+import backend.backend2.domain.model.usuario.Usuario;
 import backend.backend2.infrastructure.entity.CheckinJpa;
 import backend.backend2.infrastructure.entity.UsuarioJpa;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,16 +20,19 @@ public class Evento {
     private LocalDateTime dataFimEvento;
     private boolean ativo;
 
-    private Set<UsuarioJpa> usuarios = new HashSet<>();
-    private Set<CheckinJpa> checkins = new HashSet<>();
+    private Usuario empresaResponsavel;
 
-    public Evento(Long id, String nome, String localizacao, LocalDateTime dataInicioEvento, LocalDateTime dataFimEvento) {
+    private Set<Usuario> usuarios = new HashSet<>();
+    private Set<Checkin> checkins = new HashSet<>();
+
+    public Evento(Long id, String nome, String localizacao, LocalDateTime dataInicioEvento, LocalDateTime dataFimEvento, Usuario empresaResponsavel) {
         this.id = id;
         this.nome = nome;
         this.localizacao = localizacao;
         this.dataInicioEvento = dataInicioEvento;
         this.dataFimEvento = dataFimEvento;
         this.ativo = true;
+        this.empresaResponsavel = empresaResponsavel;
     }
 
     public Long getId() {
@@ -53,11 +59,15 @@ public class Evento {
         return ativo;
     }
 
-    public Set<UsuarioJpa> getUsuarios() {
+    public Usuario getEmpresaResponsavel() {
+        return empresaResponsavel;
+    }
+
+    public Set<Usuario> getUsuarios() {
         return usuarios;
     }
 
-    public Set<CheckinJpa> getCheckins() {
+    public Set<Checkin> getCheckins() {
         return checkins;
     }
 
@@ -69,11 +79,11 @@ public class Evento {
         this.ativo = false;
     }
 
-    public void adicionarUsuario(UsuarioJpa usuario){
-        this.usuarios.add(usuario);
+    public void adicionarUsuario(Usuario usuario){
+        usuarios.add(usuario);
     }
 
-    public void removerUsuario(UsuarioJpa usuario){
+    public void removerUsuario(Usuario usuario){
         this.usuarios.remove(usuario);
     }
 

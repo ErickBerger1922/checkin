@@ -1,8 +1,10 @@
 package backend.backend2.presentation.controller;
 
-import backend.backend2.infrastructure.entity.CheckinJpa;
-import backend.backend2.infrastructure.repository.CheckinRepositoryJpa;
-import org.springframework.beans.factory.annotation.Autowired;
+import backend.backend2.application.dto.CheckinDto;
+import backend.backend2.application.dto.CheckinListagemDto;
+import backend.backend2.application.service.CheckinService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,26 +13,28 @@ import java.util.List;
 @RequestMapping("/checkins")
 public class CheckinController {
 
-    @Autowired
-    private final CheckinRepositoryJpa repository;
+    private final CheckinService checkinService;
 
-    public CheckinController(CheckinRepositoryJpa repository) {
-        this.repository = repository;
+    public CheckinController(CheckinService checkinService) {
+        this.checkinService = checkinService;
     }
 
-    /*@PostMapping
-    public CheckinJpa realizarCheckin(@RequestBody CheckinJpa checkin) {
-        return repository.save(checkin);
-    }
-
+    @PreAuthorize("hasAnyRole('ROLE_ENTERPRISE', 'ROLE_USER')")
     @GetMapping
-    public List<CheckinJpa> listarCheckins() {
-        return repository.findAll();
+    public ResponseEntity<List<CheckinListagemDto>> listaCheckins() {
+        return ResponseEntity.ok(checkinService.listaCheckins());
     }
 
-    @DeleteMapping("/{id}")
-    public void excluirCheckin(@PathVariable Long id) {
-        repository.deleteById(id);
+    @PreAuthorize("hasAnyRole('ROLE_ENTERPRISE', 'ROLE_USER')")
+    @PostMapping
+    public ResponseEntity<CheckinDto> salvaCheckin(@RequestBody CheckinDto dto) {
+        return ResponseEntity.ok(checkinService.salvaCheckin(dto));
     }
-    */
+
+    @PreAuthorize("hasAnyRole('ROLE_ENTERPRISE', 'ROLE_USER')")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deletaCheckin(@PathVariable Long id) {
+        checkinService.deletaCheckin(id);
+        return ResponseEntity.noContent().build();
+    }
 }

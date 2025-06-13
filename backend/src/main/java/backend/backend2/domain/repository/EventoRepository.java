@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface EventoRepository {
 
-    List<Evento> listarTodos();
-
     Optional<Evento> buscarPorId(Long id);
+
+    List<Evento> listarTodos();
 
     Evento salvar(Evento evento);
 

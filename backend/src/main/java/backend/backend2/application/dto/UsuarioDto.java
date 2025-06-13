@@ -13,13 +13,13 @@ public class UsuarioDto {
 
     private String nome;
     private String cpf;
+    private String cep;
     private String logradouro;
     private String numero;
     private String complemento;
     private String bairro;
     private String cidade;
     private String estado;
-    private String cep;
     private String razaoSocial;
     private String cnpj;
     private String codigoAtivacao;
@@ -30,7 +30,7 @@ public class UsuarioDto {
     public UsuarioDto() {
     }
 
-    public UsuarioDto(Long id, String email, String senha, String nome, String cpf, String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String cep, String razaoSocial, String cnpj, String codigoAtivacao, TipoUsuario tipoUsuario) {
+    public UsuarioDto(Long id, String email, String senha, String nome, String cpf, String cep, String logradouro, String numero, String complemento, String bairro, String cidade, String estado, String razaoSocial, String cnpj, String codigoAtivacao, TipoUsuario tipoUsuario) {
         this.id = id;
         this.email = email;
         this.senha = senha;
@@ -89,6 +89,14 @@ public class UsuarioDto {
         this.cpf = cpf;
     }
 
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
     public String getLogradouro() {
         return logradouro;
     }
@@ -135,14 +143,6 @@ public class UsuarioDto {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
     }
 
     public String getRazaoSocial() {

@@ -1,34 +1,46 @@
 package backend.backend2.infrastructure.security;
 
+import backend.backend2.application.dto.UsuarioLogadoDto;
+import backend.backend2.application.exception.RecursoNaoEncontradoException;
+import backend.backend2.domain.model.funcao.Funcao;
+import backend.backend2.infrastructure.entity.FuncaoJpa;
 import backend.backend2.infrastructure.entity.UsuarioJpa;
 import backend.backend2.infrastructure.repository.UsuarioRepositoryJpa;
+import backend.backend2.query.projections.UserDetailsProjection;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    // Repositório para acessar dados de usuário no banco de dados
-
-    private final UsuarioRepositoryJpa usuarioRepository;
+    private final UsuarioRepositoryJpa usuarioRepositoryJpa;
 
     public UserDetailsServiceImpl(UsuarioRepositoryJpa usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+        this.usuarioRepositoryJpa = usuarioRepository;
     }
 
-    // Implementação do método para carregar detalhes do usuário pelo e-mail
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // Busca o usuário no banco de dados pelo e-mail
-        UsuarioJpa usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + email));
 
-        // Cria e retorna um objeto UserDetails com base no usuário encontrado
-        return org.springframework.security.core.userdetails.User
-                .withUsername(usuario.getEmail()) // Define o nome de usuário como o e-mail
-                .password(usuario.getSenha()) // Define a senha do usuário
-                .build(); // Constrói o objeto UserDetails
+        List<UserDetailsProjection> result = usuarioRepositoryJpa.buscaUsuarioEFuncoesPorEmail(email);
+        if(result.size() == 0){
+            throw new RecursoNaoEncontradoException("Usuário não encontrado.");
+        }
+
+        UsuarioJpa usuarioJpa = new UsuarioJpa();
+        usuarioJpa.setEmail(email);
+        usuarioJpa.setSenha(result.get(0).getPassword());
+        for (UserDetailsProjection projection : result){
+            usuarioJpa.adicionaFuncao(new FuncaoJpa(projection.getRoleId(), projection.getAuthority()));
+        }
+
+        return usuarioJpa;
     }
 }
