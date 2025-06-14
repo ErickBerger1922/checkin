@@ -22,7 +22,7 @@ public class EventoController {
         this.usuarioService = usuarioService;
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ENTERPRISE', 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping
     public ResponseEntity<List<EventoDto>> listaEventos(){
         return ResponseEntity.ok(eventoService.listaEventos());

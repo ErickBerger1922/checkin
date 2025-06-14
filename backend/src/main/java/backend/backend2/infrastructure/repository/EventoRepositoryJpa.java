@@ -22,21 +22,44 @@ public class EventoRepositoryJpa implements EventoRepository {
     @PersistenceContext
     private EntityManager em;
 
+    private final EventoJpaSpringRepository eventoSpringRepository;
     private final EventoConverter eventoConverter;
     private final UsuarioConverter usuarioConverter;
 
-    public EventoRepositoryJpa(EventoConverter eventoConverter, UsuarioConverter usuarioConverter) {
+    public EventoRepositoryJpa(EventoJpaSpringRepository eventoSpringRepository, EventoConverter eventoConverter, UsuarioConverter usuarioConverter) {
+        this.eventoSpringRepository = eventoSpringRepository;
         this.eventoConverter = eventoConverter;
         this.usuarioConverter = usuarioConverter;
     }
 
     @Override
-    public Optional<Evento> buscarPorId(Long id) {
-        EventoJpa eventoJpa = em.find(EventoJpa.class, id);
-        if (eventoJpa == null) {
-            return Optional.empty();
-        }
-        return Optional.of(eventoConverter.jpaParaDominio(eventoJpa));
+    public Evento findById(Long id){
+        return eventoConverter.jpaParaDominio(eventoSpringRepository
+                .findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Evento não encontrado com o id "+ id)));
+    }
+
+    @Override
+    public Evento findByEmpresaResponsavel_Id(Long empresaId){
+        return eventoConverter.jpaParaDominio(eventoSpringRepository
+                .findByEmpresaResponsavel_Id(empresaId)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Evento não encontrado com o id "+ empresaId)));
+    }
+
+    @Override
+    public List<Evento> findAllByEmpresaResponsavel_Id(Long empresaId){
+        return eventoSpringRepository.findAllByEmpresaResponsavel_Id(empresaId).stream().map(eventoConverter::jpaParaDominio).toList();
+    }
+
+    @Override
+    public boolean existsById(Long id){
+        return eventoSpringRepository.existsById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id){
+        eventoSpringRepository.deleteById(id);
     }
 
     @Override
@@ -58,33 +81,6 @@ public class EventoRepositoryJpa implements EventoRepository {
     }
 
     @Override
-    public List<Evento> listarTodos() {
-        String sql = "SELECT * FROM tb_evento";
-
-        List<EventoJpa> resultado = em
-                .createNativeQuery(sql, EventoJpa.class)
-                .getResultList();
-
-        return resultado.stream()
-                .map(eventoConverter::jpaParaDominio)
-                .toList();
-    }
-
-    @Override
-    public List<Evento> listaEventosConformeEmpresa(Long empresaId) {
-        String sql = """
-        SELECT * FROM tb_evento e
-        WHERE e.empresa_id = :empresaId
-        """;
-
-        List<EventoJpa> eventosJpa = em.createNativeQuery(sql, EventoJpa.class)
-                .setParameter("empresaId", empresaId)
-                .getResultList();
-
-        return eventosJpa.stream().map(eventoConverter::jpaParaDominio).toList();
-    }
-
-    @Override
     @Transactional
     public Evento salvar(Evento evento) {
         UsuarioJpa empresaResponsavelJpa = em.find(UsuarioJpa.class, evento.getEmpresaResponsavel().getId());
@@ -100,7 +96,7 @@ public class EventoRepositoryJpa implements EventoRepository {
     }
 
     @Transactional
-    public void adicionarUsuarioNoEvento(Long eventoId, Long usuarioId) {
+    public void adicionaUsuarioNoEvento(Long eventoId, Long usuarioId) {
         EventoJpa eventoJpa = em.find(EventoJpa.class, eventoId);
         if (eventoJpa == null) {
             throw new RecursoNaoEncontradoException("Evento não encontrado com id " + eventoId);
@@ -121,14 +117,6 @@ public class EventoRepositoryJpa implements EventoRepository {
 
         eventoJpa.getUsuarios().remove(usuarioJpa);
         em.merge(eventoJpa);
-    }
-
-    @Override
-    @Transactional
-    public void deletar(Evento evento) {
-        EventoJpa eventoJpa = eventoConverter.dominioParaJpa(evento);
-        eventoJpa = em.merge(eventoJpa);
-        em.remove(eventoJpa);
     }
 }
 

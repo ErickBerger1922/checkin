@@ -23,12 +23,14 @@ public class CheckinService {
     private final CheckinRepository checkinRepository;
     private final CheckinConverter checkinConverter;
     private final UsuarioService usuarioService;
+    private final EventoRepository eventoRepository;
     private final EventoService eventoService;
 
-    public CheckinService(CheckinRepository checkinRepository, CheckinConverter checkinConverter, UsuarioService usuarioService, EventoService eventoService) {
+    public CheckinService(CheckinRepository checkinRepository, CheckinConverter checkinConverter, UsuarioService usuarioService, EventoRepository eventoRepository, EventoService eventoService) {
         this.checkinRepository = checkinRepository;
         this.checkinConverter = checkinConverter;
         this.usuarioService = usuarioService;
+        this.eventoRepository = eventoRepository;
         this.eventoService = eventoService;
     }
 
@@ -40,7 +42,7 @@ public class CheckinService {
 
     @Transactional
     public CheckinDto salvaCheckin(CheckinDto dto){
-        Evento evento = eventoService.buscarPorId(dto.getEventoId());
+        Evento evento = eventoRepository.findById(dto.getEventoId());
         Usuario usuario = usuarioService.usuarioAutenticado();
 
         eventoService.vinculaUsuarioAoEvento(evento.getId(), usuario.getId());
